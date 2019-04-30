@@ -14,8 +14,8 @@ object Common extends AutoPlugin {
   override def requires = JvmPlugin && HeaderPlugin
 
   override def globalSettings = Seq(
-    organization := "com.lightbend.akka",
-    organizationName := "Lightbend Inc.",
+    organization := "com.rallyhealth",
+    organizationName := "Rally Health",
     organizationHomepage := Some(url("https://www.lightbend.com/")),
     homepage := Some(url("https://doc.akka.io/docs/alpakka/current/")),
     apiURL := Some(url(s"https://doc.akka.io/api/alpakka/${version.value}")),
@@ -33,7 +33,7 @@ object Common extends AutoPlugin {
     whitesourceGroup := Whitesource.Group.Community,
     crossVersion := CrossVersion.binary,
     crossScalaVersions := Dependencies.ScalaVersions,
-    scalaVersion := Dependencies.Scala212,
+    scalaVersion := Dependencies.Scala211,
     scalacOptions ++= Seq(
       "-encoding",
       "UTF-8",
@@ -47,7 +47,7 @@ object Common extends AutoPlugin {
       "-target:jvm-1.8"
     ),
     scalacOptions ++= (scalaVersion.value match {
-      case Dependencies.Scala213 => Seq.empty[String]
+      case Dependencies.Scala211 => Seq.empty[String]
       case _ => Seq("-Yno-adapted-args")
     }),
     Compile / doc / scalacOptions := scalacOptions.value ++ Seq(

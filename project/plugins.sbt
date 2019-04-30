@@ -6,7 +6,6 @@ addSbtPlugin("com.lightbend.paradox" % "sbt-paradox-project-info" % "1.1.2")
 addSbtPlugin("com.lightbend.akka" % "sbt-paradox-akka" % "0.18")
 addSbtPlugin("com.eed3si9n" % "sbt-unidoc" % "0.4.2")
 addSbtPlugin("com.thoughtworks.sbt-api-mappings" % "sbt-api-mappings" % "2.1.0")
-addSbtPlugin("org.foundweekends" % "sbt-bintray" % "0.5.4")
 addSbtPlugin("com.typesafe" % "sbt-mima-plugin" % "0.3.0")
 addSbtPlugin("com.lightbend" % "sbt-whitesource" % "0.1.14")
 // has following PRs merged in:
@@ -22,3 +21,8 @@ addSbtPlugin("pl.project13.scala" % "sbt-jmh" % "0.3.4")
 addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.9.2+10-148ba0ff")
 // patched version of sbt-dependency-graph and sbt-site
 resolvers += Resolver.bintrayIvyRepo("2m", "sbt-plugins")
+
+
+// Rally stuff.
+resolvers += Resolver.url("Rally Plugin Releases", url("https://artifacts.werally.in/artifactory/ivy-plugins-release"))(Resolver.ivyStylePatterns)
+addSbtPlugin("com.rallyhealth" %% "rally-sbt-plugin" % "0.16.0")
