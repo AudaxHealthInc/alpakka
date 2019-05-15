@@ -2,6 +2,7 @@ import Whitesource.whitesourceGroup
 
 lazy val modules: Seq[ProjectReference] = Seq(
   csv,
+  s3
 )
 
 lazy val alpakka = project
@@ -40,6 +41,7 @@ lazy val alpakka = project
   )
 
 lazy val csv = alpakkaProject("csv", "csv", Dependencies.Csv, whitesourceGroup := Whitesource.Group.Supported)
+lazy val s3 = alpakkaProject("s3", "s3", Dependencies.S3, whitesourceGroup := Whitesource.Group.Supported)
 
 def alpakkaProject(projectId: String, moduleName: String, additionalSettings: sbt.Def.SettingsDefinition*): Project =
   Project(id = projectId, base = file(projectId))
