@@ -17,6 +17,8 @@ private final class SetupSinkStage[T, M](factory: ActorMaterializer => Attribute
   private val in = Inlet[T]("SetupSinkStage.in")
   override val shape = SinkShape(in)
 
+  private val attributes = Attributes.none
+
   override def createLogicAndMaterializedValue(inheritedAttributes: Attributes): (GraphStageLogic, Future[M]) = {
     val matPromise = Promise[M]
     (createStageLogic(matPromise), matPromise.future)
@@ -42,6 +44,7 @@ private final class SetupSinkStage[T, M](factory: ActorMaterializer => Attribute
 private final class SetupFlowStage[T, U, M](factory: ActorMaterializer => Attributes => Flow[T, U, M])
     extends GraphStageWithMaterializedValue[FlowShape[T, U], Future[M]] {
 
+  private val attributes = Attributes.none
   private val in = Inlet[T]("SetupFlowStage.in")
   private val out = Outlet[U]("SetupFlowStage.out")
   override val shape = FlowShape(in, out)
@@ -79,6 +82,7 @@ private final class SetupFlowStage[T, U, M](factory: ActorMaterializer => Attrib
 private final class SetupSourceStage[T, M](factory: ActorMaterializer => Attributes => Source[T, M])
     extends GraphStageWithMaterializedValue[SourceShape[T], Future[M]] {
 
+  private val attributes = Attributes.none
   private val out = Outlet[T]("SetupSourceStage.out")
   override val shape = SourceShape(out)
 
