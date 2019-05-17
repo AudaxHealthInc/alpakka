@@ -30,9 +30,9 @@ private final class SetupSinkStage[T, M](factory: ActorMaterializer => Attribute
     setHandler(in, delegateToSubOutlet(() => grab(in), subOutlet))
 
     override def preStart(): Unit = {
-      val sink = factory(actorMaterializer(materializer))(initialAttributes)
+      val sink = factory(actorMaterializer(materializer))(module.attributes)
 
-      val mat = Source.fromGraph(subOutlet.source).runWith(sink.withAttributes(initialAttributes))(subFusingMaterializer)
+      val mat = Source.fromGraph(subOutlet.source).runWith(sink.withAttributes(module.attributes))(subFusingMaterializer)
       matPromise.success(mat)
     }
   }
@@ -64,11 +64,11 @@ private final class SetupFlowStage[T, U, M](factory: ActorMaterializer => Attrib
     setHandler(out, delegateToSubInlet(subInlet))
 
     override def preStart(): Unit = {
-      val flow = factory(actorMaterializer(materializer))(initialAttributes)
+      val flow = factory(actorMaterializer(materializer))(module.attributes)
 
       val mat = Source
         .fromGraph(subOutlet.source)
-        .viaMat(flow.withAttributes(initialAttributes))(Keep.right)
+        .viaMat(flow.withAttributes(module.attributes))(Keep.right)
         .to(Sink.fromGraph(subInlet.sink))
         .run()(subFusingMaterializer)
       matPromise.success(mat)
@@ -95,10 +95,10 @@ private final class SetupSourceStage[T, M](factory: ActorMaterializer => Attribu
     setHandler(out, delegateToSubInlet(subInlet))
 
     override def preStart(): Unit = {
-      val source = factory(actorMaterializer(materializer))(initialAttributes)
+      val source = factory(actorMaterializer(materializer))(module.attributes)
 
       val mat = source
-        .withAttributes(initialAttributes)
+        .withAttributes(module.attributes)
         .to(Sink.fromGraph(subInlet.sink))
         .run()(subFusingMaterializer)
       matPromise.success(mat)
